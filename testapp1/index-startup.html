@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+      // copy & paste
+      gui = require('nw.gui');
+      win = gui.Window.get();
+
+      // Enable Cut & Paste
+      var nativeMenuBar = new gui.Menu({ type: "menubar" });
+      try {
+        nativeMenuBar.createMacBuiltin("My App");
+        win.menu = nativeMenuBar;
+      } catch (ex) {
+        console.log(ex.message);
+      }
+  </script>
+  <title>Hello World 1!</title>
+</head>
+<body>
+<h1><script type="text/javascript">document.write(gui.App.manifest.name)</script></h1>
+  <p>Loading and checking for updates now.</p>
+  <ol id="log"></ol>
+  <script>
+    var spawn = require('child_process').spawn;
+    var path = require('path');
+    base_path = path.join(process.cwd(),'./../../../../../../..');
+    app2_path = path.join(base_path, "/TestApp-2/TestApp2/osx/TestApp2.app");
+    log("App started: "+ base_path);
+    log("app2_path: "+app2_path);
+
+    child = run(app2_path + "/Contents/MacOS/node-webkit");
+
+    // child.sp.stdio[3].on('data', function(data) {
+    //   log("data: "+data);
+    // });
+    // 
+    child.stdout.on('data', function(data) {
+      log("data: "+data);
+    });
+    child.stdout.on('message', function(data) {
+      log("message: "+data);
+    });
+
+
+    function run(path, args, options){
+      log("run:" + path + " | "+ args + " | "+ options);
+      var opts = {
+        //detached: true,
+        stdio: [ 'ignore', 'ignore', 'ignore', 'ipc']
+        // stdio: [ 'ipc' ]
+      }
+      for(var key in options){
+        opts[key] = options[key];
+      }
+
+      var sp = spawn(path, args, opts);
+
+      sp.on('message', function(buf) {
+        console.log("msg: "+buf);
+        log("run-msg: "+buf);
+      });
+      sp.on('data', function(buf) {
+        console.log("msg: "+buf);
+        log("run-data: "+buf);
+      });
+      //sp.unref();
+      return sp;
+    }
+
+    function log(msg) {
+      var newdiv = document.createElement('li');
+      newdiv.innerHTML = msg;
+      document.getElementById("log").appendChild(newdiv);
+    }
+  </script>
+</body>
+</html>

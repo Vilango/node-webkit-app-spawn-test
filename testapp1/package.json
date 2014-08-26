@@ -1,0 +1,23 @@
+{
+  "main": "index-startup.html",
+  "name": "TestApp1",
+  "description": "Test App 1",
+  "version": "0.0.1",
+  "author":"Gerwin Brunner <gerwin.brunner@vilango.com>",
+  "window": {
+    "title": "Test App 1",
+    "icon": "link.png",
+    "toolbar": true,
+    "frame": true,
+    "width": 1000,
+    "height": 800,
+    "position": "center",
+    "min_width": 400,
+    "min_height": 200
+  },
+  "webkit": {
+    "plugin": true
+  },
+  "dependencies": {
+  }
+}

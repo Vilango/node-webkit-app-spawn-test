@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+      // copy & paste
+      gui = require('nw.gui');
+      //var parseArgs = require('minimist');
+      win = gui.Window.get();
+
+      // Enable Cut & Paste
+      var nativeMenuBar = new gui.Menu({ type: "menubar" });
+      try {
+        nativeMenuBar.createMacBuiltin("My App");
+        win.menu = nativeMenuBar;
+      } catch (ex) {
+        console.log(ex.message);
+      }
+  </script>
+  <title>Hello World 2!</title>
+</head>
+<body>
+<h1><script type="text/javascript">document.write(gui.App.manifest.name)</script></h1>
+  <p>Loading and checking for updates now.</p>
+  <div><button disabled onclick="pipeTest();">pipe test</button><button onclick="ipcTest();">ipc test</button></div>
+  <ol id="log"></ol>
+  <script>
+    log("We are also running");
+    // process.send("Hello!");
+
+    function ipcTest(){
+      log("ipc test started");
+      process.send('JUHU');
+      log("ipc test done");
+    }
+
+
+    function pipeTest(){
+      log("pipe test started");
+      var net = require('net');
+      var pipe = new net.Socket({ fd: 3 });
+
+      pipe.on('data', function(buf) {
+        console.log("buf: "+buf);
+      });
+
+      pipe.write("Hello");
+      log("pipe test done");
+    }
+
+    function log(msg) {
+      var newdiv = document.createElement('li');
+      newdiv.innerHTML = msg;
+      document.getElementById("log").appendChild(newdiv);
+    }
+  </script>
+</body>
+</html>

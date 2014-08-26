@@ -1,0 +1,21 @@
+{
+  "name": "node-webkit-app-spawn-test",
+  "description": "Testing spawning two apps and communicating",
+  "keywords": [
+    "node-webkit",
+    "test-app"
+  ],
+  "author": "Gerwin Brunner <gerwin.brunner@vilango.com>",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Vilango/node-webkit-app-spawn-test.git"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "node-webkit-builder": "~0.1"
+  },
+  "main": "runTest.js",
+  "license": "MIT"
+}
